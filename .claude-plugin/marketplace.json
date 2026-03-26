@@ -1,0 +1,85 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pm-skills",
+  "version": "1.2.0",
+  "description": "Structured AI workflows for better product decisions. 84 domain-specific skills and 40 chained workflows across 12 PM plugins — from discovery to strategy, learning design, execution, launch, and growth. Includes EdTech-specific plugins for learning design, child safety, and engagement. Master orchestrator for lifecycle-aware skill routing.",
+  "owner": {
+    "name": "Paweł Huryn",
+    "email": "pawel@productcompass.pm",
+    "url": "https://www.productcompass.pm"
+  },
+  "plugins": [
+    {
+      "name": "pm-product-discovery",
+      "description": "Product discovery skills for PMs: ideation, experiments, assumption testing, feature prioritization, and customer interview synthesis.",
+      "source": "./pm-product-discovery",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-product-strategy",
+      "description": "Product strategy skills for PMs: vision, strategy canvas, value propositions, lean canvas, business model canvas, SWOT, PESTLE, Ansoff Matrix, Porter's Five Forces, and monetization.",
+      "source": "./pm-product-strategy",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-execution",
+      "description": "Execution and product management skills: PRDs, OKRs, roadmaps, sprints, pre-mortems, stakeholder maps, user stories, prioritization frameworks, and more.",
+      "source": "./pm-execution",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-market-research",
+      "description": "Market research skills for PMs: user personas, market segmentation, sentiment analysis, and competitive analysis.",
+      "source": "./pm-market-research",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-data-analytics",
+      "description": "Data analytics skills for PMs: SQL query generation and cohort analysis. Analyze user data, generate queries, and identify retention patterns.",
+      "source": "./pm-data-analytics",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-go-to-market",
+      "description": "Go-to-market skills for PMs: GTM strategy, growth loops, GTM motions, beachhead segments, and ideal customer profiles.",
+      "source": "./pm-go-to-market",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-marketing-growth",
+      "description": "Product marketing and growth skills: marketing ideas, value proposition statements, North Star metrics, product naming, and positioning.",
+      "source": "./pm-marketing-growth",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-toolkit",
+      "description": "PM utility skills: resume review, NDA drafting, privacy policy generation, and grammar/flow checking. Essential tools for product managers beyond core product work.",
+      "source": "./pm-toolkit",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-orchestrator",
+      "description": "Master PM orchestrator: lifecycle-aware routing, project state tracking, context injection, and intelligent skill chaining across all PM skills. Use /pm to start.",
+      "source": "./pm-orchestrator",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-learning-design",
+      "description": "Learning experience design skills for EdTech: learning objectives (Bloom's/Backward Design), curriculum structure, pedagogy model selection, assessment design, adaptive learning paths, feedback systems, and efficacy measurement.",
+      "source": "./pm-learning-design",
+      "category": "edtech"
+    },
+    {
+      "name": "pm-child-safety",
+      "description": "Child safety and compliance skills: COPPA/GDPR-K/Vietnam PDPD audits, parental consent flow design, age gating, data minimization, and child-safe UX patterns.",
+      "source": "./pm-child-safety",
+      "category": "edtech"
+    },
+    {
+      "name": "pm-engagement-design",
+      "description": "Engagement and retention design for EdTech: ethical gamification, progression mechanics, habit loops, social learning, and parent engagement — all tied to learning outcomes.",
+      "source": "./pm-engagement-design",
+      "category": "edtech"
+    }
+  ]
+}

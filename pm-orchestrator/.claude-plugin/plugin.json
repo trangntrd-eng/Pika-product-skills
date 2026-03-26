@@ -1,0 +1,19 @@
+{
+  "name": "pm-orchestrator",
+  "version": "1.0.0",
+  "description": "Master PM orchestrator: lifecycle-aware routing, project state tracking, and intelligent skill chaining across all 65 PM skills.",
+  "author": {
+    "name": "Paweł Huryn",
+    "email": "pawel@productcompass.pm",
+    "url": "https://www.productcompass.pm"
+  },
+  "keywords": [
+    "product-management",
+    "orchestrator",
+    "workflow",
+    "lifecycle",
+    "agent"
+  ],
+  "homepage": "https://www.productcompass.pm",
+  "license": "MIT"
+}

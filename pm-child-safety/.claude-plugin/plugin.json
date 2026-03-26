@@ -1,0 +1,21 @@
+{
+  "name": "pm-child-safety",
+  "version": "1.0.1",
+  "description": "Child safety and compliance skills for EdTech products targeting minors: COPPA/GDPR-K compliance, parental consent design, age gating, data minimization, and child-safe UX patterns.",
+  "author": {
+    "name": "PM Skills Marketplace",
+    "url": "https://www.productcompass.pm"
+  },
+  "keywords": [
+    "product-management",
+    "child-safety",
+    "coppa",
+    "gdpr",
+    "parental-consent",
+    "age-gating",
+    "edtech",
+    "compliance"
+  ],
+  "homepage": "https://www.productcompass.pm",
+  "license": "MIT"
+}

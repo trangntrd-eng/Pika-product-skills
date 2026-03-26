@@ -1,0 +1,21 @@
+{
+  "name": "pm-engagement-design",
+  "version": "1.0.1",
+  "description": "Engagement and gamification design skills for EdTech products: gamification systems, progression mechanics, habit loops, social learning, and parent engagement — designed to drive retention through genuine learning motivation, not dark patterns.",
+  "author": {
+    "name": "PM Skills Marketplace",
+    "url": "https://www.productcompass.pm"
+  },
+  "keywords": [
+    "product-management",
+    "gamification",
+    "engagement",
+    "retention",
+    "habit-loops",
+    "progression",
+    "social-learning",
+    "edtech"
+  ],
+  "homepage": "https://www.productcompass.pm",
+  "license": "MIT"
+}

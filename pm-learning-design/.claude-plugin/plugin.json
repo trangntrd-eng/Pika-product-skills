@@ -1,0 +1,21 @@
+{
+  "name": "pm-learning-design",
+  "version": "1.0.1",
+  "description": "Learning experience design skills for EdTech products: learning objectives, curriculum structure, pedagogy selection, assessment design, adaptive learning paths, feedback systems, and efficacy measurement.",
+  "author": {
+    "name": "PM Skills Marketplace",
+    "url": "https://www.productcompass.pm"
+  },
+  "keywords": [
+    "product-management",
+    "learning-design",
+    "edtech",
+    "curriculum",
+    "pedagogy",
+    "assessment",
+    "adaptive-learning",
+    "instructional-design"
+  ],
+  "homepage": "https://www.productcompass.pm",
+  "license": "MIT"
+}

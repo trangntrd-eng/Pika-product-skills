@@ -1,0 +1,1100 @@
+# ============================================================================
+# PM ORCHESTRATOR — SKILL DEPENDENCY GRAPH
+# ============================================================================
+#
+# This file defines the lifecycle phases, skill nodes, and dependency edges
+# that the master orchestrator uses to determine what to do next.
+#
+# Each skill node declares:
+#   - phase: which lifecycle phase it belongs to
+#   - plugin: which plugin contains it
+#   - produces: artifact types this skill generates
+#   - requires: artifact types needed (soft dependencies — warn, don't block)
+#   - enhancedBy: artifacts that improve output quality if available
+#   - effort: relative effort (quick / moderate / deep)
+#   - description: one-line summary for the orchestrator to present
+#
+# The orchestrator reads this graph + project-state.md to determine:
+#   1. What phase the project is in
+#   2. Which skills are unblocked (dependencies satisfied)
+#   3. What the highest-leverage next action is
+#   4. Which prior artifacts to inject as context
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# LIFECYCLE PHASES (ordered)
+# ----------------------------------------------------------------------------
+phases:
+  - id: discover
+    name: "Discovery"
+    description: "Understand users, market, and problem space"
+    goal: "Validated understanding of who you're building for and what problems matter"
+    exit_criteria:
+      - personas or user-segments defined
+      - key assumptions identified and prioritized
+      - at least one validation experiment designed
+
+  - id: strategy
+    name: "Strategy"
+    description: "Define vision, positioning, and business model"
+    goal: "Clear strategic direction with defensible choices and trade-offs"
+    exit_criteria:
+      - product strategy or vision documented
+      - business model defined
+      - competitive positioning articulated
+
+  - id: design-learning
+    name: "Learning Design"
+    description: "Design pedagogically sound learning experiences before building features"
+    goal: "Learning objectives, pedagogy model, curriculum structure, and assessment design ready to inform the PRD"
+    exit_criteria:
+      - learning objectives defined with Bloom's levels
+      - pedagogy model selected
+      - curriculum structure documented
+      - assessment and feedback systems designed
+
+  - id: plan
+    name: "Planning"
+    description: "Translate strategy into executable plans"
+    goal: "Actionable PRD, OKRs, and roadmap ready for engineering"
+    exit_criteria:
+      - PRD written and reviewed
+      - OKRs defined
+      - backlog prioritized with user stories
+
+  - id: validate
+    name: "Validation"
+    description: "Test assumptions with experiments and data"
+    goal: "Evidence-based confidence in key decisions"
+    exit_criteria:
+      - critical experiments run or designed
+      - metrics dashboard in place
+      - pre-mortem completed
+
+  - id: launch
+    name: "Go-to-Market"
+    description: "Prepare positioning, channels, and launch plan"
+    goal: "Launch-ready GTM strategy with clear ICP and messaging"
+    exit_criteria:
+      - beachhead segment defined
+      - ICP documented
+      - GTM strategy with channel plan
+
+  - id: grow
+    name: "Growth"
+    description: "Scale acquisition, retention, and revenue"
+    goal: "Sustainable growth engine with measurable loops"
+    exit_criteria:
+      - North Star metric defined
+      - growth loops identified
+      - cohort analysis running
+
+# ----------------------------------------------------------------------------
+# SKILL NODES
+# ----------------------------------------------------------------------------
+skills:
+
+  # ==========================================================================
+  # DISCOVER PHASE — pm-product-discovery + pm-market-research
+  # ==========================================================================
+
+  # --- Ideation ---
+  brainstorm-ideas-new:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [ideas]
+    requires: []
+    enhancedBy: [personas, feedback-insights, competitive-landscape]
+    effort: quick
+    description: "Generate product ideas from PM, Designer, and Engineer perspectives (new product)"
+    command: "/brainstorm"
+
+  brainstorm-ideas-existing:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [ideas]
+    requires: []
+    enhancedBy: [personas, feedback-insights, competitive-landscape, metrics]
+    effort: quick
+    description: "Generate feature ideas for an existing product"
+    command: "/brainstorm"
+
+  # --- Assumptions ---
+  identify-assumptions-new:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [assumptions]
+    requires: [ideas]
+    enhancedBy: [personas, competitive-landscape]
+    effort: moderate
+    description: "Surface risky assumptions across 8 categories (new product)"
+    command: "/discover"
+
+  identify-assumptions-existing:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [assumptions]
+    requires: [ideas]
+    enhancedBy: [personas, metrics, feedback-insights]
+    effort: moderate
+    description: "Surface risky assumptions across 4 categories (existing product)"
+    command: "/discover"
+
+  prioritize-assumptions:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [prioritized-assumptions]
+    requires: [assumptions]
+    enhancedBy: []
+    effort: quick
+    description: "Rank assumptions by Impact x Risk on a prioritization matrix"
+    command: "/discover"
+
+  # --- Experiments ---
+  brainstorm-experiments-new:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [experiments]
+    requires: [prioritized-assumptions]
+    enhancedBy: [personas]
+    effort: moderate
+    description: "Design lean startup experiments for new product assumptions"
+    command: "/discover"
+
+  brainstorm-experiments-existing:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [experiments]
+    requires: [prioritized-assumptions]
+    enhancedBy: [personas, metrics]
+    effort: moderate
+    description: "Design A/B tests, prototypes, and data analysis for existing products"
+    command: "/discover"
+
+  # --- Prioritization ---
+  prioritize-features:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [prioritized-backlog]
+    requires: [ideas]
+    enhancedBy: [strategy, personas, metrics]
+    effort: moderate
+    description: "Prioritize backlog by impact, effort, risk, and strategic alignment"
+    command: "/triage-requests"
+
+  analyze-feature-requests:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [feature-analysis]
+    requires: []
+    enhancedBy: [strategy, personas, prioritized-backlog]
+    effort: moderate
+    description: "Analyze feature requests for themes, alignment, impact, and effort"
+    command: "/triage-requests"
+
+  # --- Opportunity Mapping ---
+  opportunity-solution-tree:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [ost]
+    requires: []
+    enhancedBy: [strategy, personas, ideas, metrics]
+    effort: deep
+    description: "Map Outcomes → Opportunities → Solutions → Experiments"
+    command: "/discover"
+
+  # --- Interviews ---
+  interview-script:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [interview-script]
+    requires: []
+    enhancedBy: [personas, assumptions]
+    effort: moderate
+    description: "Create structured interview script with JTBD probes"
+    command: "/interview"
+
+  summarize-interview:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [interview-insights]
+    requires: []
+    enhancedBy: [personas, assumptions]
+    effort: moderate
+    description: "Synthesize interview transcript into insights and action items"
+    command: "/interview"
+
+  # --- Metrics ---
+  metrics-dashboard:
+    phase: discover
+    plugin: pm-product-discovery
+    produces: [metrics]
+    requires: []
+    enhancedBy: [strategy, north-star]
+    effort: moderate
+    description: "Design product metrics framework (North Star, input, health metrics)"
+    command: "/setup-metrics"
+
+  # --- User Research (pm-market-research) ---
+  user-personas:
+    phase: discover
+    plugin: pm-market-research
+    produces: [personas]
+    requires: []
+    enhancedBy: [interview-insights, feedback-insights]
+    effort: moderate
+    description: "Create 3 user personas with JTBD, pains, gains, and unexpected insights"
+    command: "/research-users"
+
+  user-segmentation:
+    phase: discover
+    plugin: pm-market-research
+    produces: [user-segments]
+    requires: []
+    enhancedBy: [feedback-insights, personas]
+    effort: moderate
+    description: "Behavioral segmentation from user feedback data"
+    command: "/research-users"
+
+  market-segments:
+    phase: discover
+    plugin: pm-market-research
+    produces: [market-segments]
+    requires: []
+    enhancedBy: [personas, market-size]
+    effort: moderate
+    description: "Define 3-5 customer segments with demographics, JTBD, and fit"
+    command: "/research-users"
+
+  customer-journey-map:
+    phase: discover
+    plugin: pm-market-research
+    produces: [journey-map]
+    requires: [personas]
+    enhancedBy: [feedback-insights, metrics]
+    effort: deep
+    description: "Map the full customer journey: Awareness → Advocacy"
+    command: "/research-users"
+
+  sentiment-analysis:
+    phase: discover
+    plugin: pm-market-research
+    produces: [feedback-insights]
+    requires: []
+    enhancedBy: [personas]
+    effort: moderate
+    description: "Analyze user feedback for sentiment, themes, and JTBD patterns"
+    command: "/analyze-feedback"
+
+  # --- Competitive & Market (pm-market-research) ---
+  competitor-analysis:
+    phase: discover
+    plugin: pm-market-research
+    produces: [competitive-landscape]
+    requires: []
+    enhancedBy: [personas, strategy]
+    effort: deep
+    description: "Analyze competitive landscape, strengths/weaknesses, and differentiation"
+    command: "/competitive-analysis"
+
+  market-sizing:
+    phase: discover
+    plugin: pm-market-research
+    produces: [market-size]
+    requires: []
+    enhancedBy: [personas, market-segments]
+    effort: moderate
+    description: "Estimate TAM/SAM/SOM using top-down and bottom-up approaches"
+    command: "/competitive-analysis"
+
+  # ==========================================================================
+  # STRATEGY PHASE — pm-product-strategy
+  # ==========================================================================
+
+  product-vision:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [vision]
+    requires: []
+    enhancedBy: [personas, competitive-landscape, market-size]
+    effort: moderate
+    description: "Brainstorm an inspiring product vision"
+    command: "/strategy"
+
+  product-strategy:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [strategy]
+    requires: []
+    enhancedBy: [vision, personas, competitive-landscape, market-size, feedback-insights]
+    effort: deep
+    description: "Build a 9-section Product Strategy Canvas"
+    command: "/strategy"
+
+  value-proposition:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [value-prop]
+    requires: []
+    enhancedBy: [personas, competitive-landscape, strategy]
+    effort: moderate
+    description: "Define 6-part JTBD value proposition"
+    command: "/value-proposition"
+
+  business-model:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [business-model]
+    requires: []
+    enhancedBy: [strategy, personas, market-size, value-prop]
+    effort: deep
+    description: "Build a Business Model Canvas (9 building blocks)"
+    command: "/business-model"
+
+  lean-canvas:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [business-model]
+    requires: []
+    enhancedBy: [personas, competitive-landscape]
+    effort: moderate
+    description: "Build a Lean Canvas (problem/solution/metrics/UVP)"
+    command: "/business-model"
+
+  startup-canvas:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [strategy, business-model]
+    requires: []
+    enhancedBy: [personas, competitive-landscape, market-size]
+    effort: deep
+    description: "Combined Strategy + Business Model canvas for new products"
+    command: "/business-model"
+
+  swot-analysis:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [swot]
+    requires: []
+    enhancedBy: [competitive-landscape, strategy]
+    effort: quick
+    description: "Strengths, Weaknesses, Opportunities, Threats analysis"
+    command: "/market-scan"
+
+  pestle-analysis:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [pestle]
+    requires: []
+    enhancedBy: [market-size, competitive-landscape]
+    effort: moderate
+    description: "Political, Economic, Social, Technological, Legal, Environmental scan"
+    command: "/market-scan"
+
+  porters-five-forces:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [porters]
+    requires: []
+    enhancedBy: [competitive-landscape, market-size]
+    effort: moderate
+    description: "Competitive rivalry, supplier/buyer power, substitutes, entrants"
+    command: "/market-scan"
+
+  ansoff-matrix:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [growth-options]
+    requires: []
+    enhancedBy: [strategy, market-segments, competitive-landscape]
+    effort: quick
+    description: "Growth strategy options: penetration, development, diversification"
+    command: "/market-scan"
+
+  pricing-strategy:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [pricing]
+    requires: []
+    enhancedBy: [personas, competitive-landscape, business-model, value-prop]
+    effort: moderate
+    description: "Design pricing models, willingness-to-pay, and elasticity"
+    command: "/pricing"
+
+  monetization-strategy:
+    phase: strategy
+    plugin: pm-product-strategy
+    produces: [monetization]
+    requires: []
+    enhancedBy: [business-model, personas, market-segments, pricing]
+    effort: moderate
+    description: "Generate 3-5 monetization strategies with audience fit"
+    command: "/pricing"
+
+  # ==========================================================================
+  # PLAN PHASE — pm-execution
+  # ==========================================================================
+
+  create-prd:
+    phase: plan
+    plugin: pm-execution
+    produces: [prd]
+    requires: []
+    enhancedBy: [strategy, personas, value-prop, assumptions, competitive-landscape]
+    effort: deep
+    description: "Write an 8-section PRD"
+    command: "/write-prd"
+
+  user-stories:
+    phase: plan
+    plugin: pm-execution
+    produces: [stories]
+    requires: [prd]
+    enhancedBy: [personas]
+    effort: moderate
+    description: "Create INVEST-compliant user stories with acceptance criteria"
+    command: "/write-stories"
+
+  job-stories:
+    phase: plan
+    plugin: pm-execution
+    produces: [stories]
+    requires: [prd]
+    enhancedBy: [personas, journey-map]
+    effort: moderate
+    description: "Write job stories: When [situation], I want [motivation], so I can [outcome]"
+    command: "/write-stories"
+
+  wwas:
+    phase: plan
+    plugin: pm-execution
+    produces: [stories]
+    requires: [prd]
+    enhancedBy: []
+    effort: moderate
+    description: "Write Why-What-Acceptance backlog items"
+    command: "/write-stories"
+
+  brainstorm-okrs:
+    phase: plan
+    plugin: pm-execution
+    produces: [okrs]
+    requires: []
+    enhancedBy: [strategy, north-star, metrics]
+    effort: moderate
+    description: "Brainstorm team-level OKRs aligned with company objectives"
+    command: "/plan-okrs"
+
+  sprint-plan:
+    phase: plan
+    plugin: pm-execution
+    produces: [sprint-plan]
+    requires: [stories]
+    enhancedBy: [prioritized-backlog]
+    effort: moderate
+    description: "Plan sprint: capacity, story selection, dependency mapping"
+    command: "/sprint"
+
+  outcome-roadmap:
+    phase: plan
+    plugin: pm-execution
+    produces: [roadmap]
+    requires: []
+    enhancedBy: [strategy, okrs, prioritized-backlog]
+    effort: moderate
+    description: "Convert feature-based roadmap to outcome-focused roadmap"
+    command: "/transform-roadmap"
+
+  stakeholder-map:
+    phase: plan
+    plugin: pm-execution
+    produces: [stakeholder-map]
+    requires: []
+    enhancedBy: [strategy, prd]
+    effort: quick
+    description: "Power/Interest grid with communication plan"
+    command: "/stakeholder-map"
+
+  prioritization-frameworks:
+    phase: plan
+    plugin: pm-execution
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "Reference guide to 9 prioritization frameworks (RICE, ICE, MoSCoW...)"
+    command: "/write-stories"
+
+  # ==========================================================================
+  # VALIDATE PHASE — pm-execution + pm-data-analytics
+  # ==========================================================================
+
+  pre-mortem:
+    phase: validate
+    plugin: pm-execution
+    produces: [risk-analysis]
+    requires: []
+    enhancedBy: [prd, strategy, assumptions]
+    effort: moderate
+    description: "Pre-mortem risk analysis before launch"
+    command: "/pre-mortem"
+
+  test-scenarios:
+    phase: validate
+    plugin: pm-execution
+    produces: [test-scenarios]
+    requires: [stories]
+    enhancedBy: [prd, personas]
+    effort: moderate
+    description: "Generate test scenarios: happy paths, edge cases, error handling"
+    command: "/test-scenarios"
+
+  retro:
+    phase: validate
+    plugin: pm-execution
+    produces: [retro-insights]
+    requires: []
+    enhancedBy: [sprint-plan]
+    effort: quick
+    description: "Facilitate sprint retrospective (Start/Stop/Continue)"
+    command: "/sprint"
+
+  sql-queries:
+    phase: validate
+    plugin: pm-data-analytics
+    produces: []
+    requires: []
+    enhancedBy: [metrics]
+    effort: quick
+    description: "Generate SQL queries from natural language"
+    command: "/write-query"
+
+  cohort-analysis:
+    phase: validate
+    plugin: pm-data-analytics
+    produces: [cohort-data]
+    requires: []
+    enhancedBy: [metrics, north-star]
+    effort: moderate
+    description: "Analyze retention curves, feature adoption, engagement trends"
+    command: "/analyze-cohorts"
+
+  ab-test-analysis:
+    phase: validate
+    plugin: pm-data-analytics
+    produces: [experiment-results]
+    requires: []
+    enhancedBy: [experiments, metrics]
+    effort: moderate
+    description: "Analyze A/B test: significance, sample size, confidence, recommendations"
+    command: "/analyze-test"
+
+  # ==========================================================================
+  # LAUNCH PHASE — pm-go-to-market
+  # ==========================================================================
+
+  beachhead-segment:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [beachhead]
+    requires: []
+    enhancedBy: [personas, market-segments, market-size, competitive-landscape]
+    effort: moderate
+    description: "Identify best first market segment for launch"
+    command: "/plan-launch"
+
+  ideal-customer-profile:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [icp]
+    requires: [beachhead]
+    enhancedBy: [personas, journey-map]
+    effort: moderate
+    description: "Define ICP: demographics, behaviors, JTBD, qualification signals"
+    command: "/plan-launch"
+
+  gtm-strategy:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [gtm-plan]
+    requires: []
+    enhancedBy: [beachhead, icp, value-prop, competitive-landscape, pricing]
+    effort: deep
+    description: "Complete GTM strategy: positioning, messaging, channels, launch plan"
+    command: "/plan-launch"
+
+  gtm-motions:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [gtm-motions]
+    requires: []
+    enhancedBy: [gtm-plan, icp, business-model]
+    effort: moderate
+    description: "Identify best GTM motions and tools"
+    command: "/growth-strategy"
+
+  competitive-battlecard:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [battlecard]
+    requires: [competitive-landscape]
+    enhancedBy: [value-prop, icp, gtm-plan]
+    effort: moderate
+    description: "Sales-ready competitive positioning and objection handling"
+    command: "/battlecard"
+
+  growth-loops:
+    phase: launch
+    plugin: pm-go-to-market
+    produces: [growth-loops]
+    requires: []
+    enhancedBy: [gtm-plan, business-model, north-star, metrics]
+    effort: moderate
+    description: "Identify sustainable growth flywheels"
+    command: "/growth-strategy"
+
+  # ==========================================================================
+  # GROW PHASE — pm-marketing-growth
+  # ==========================================================================
+
+  north-star-metric:
+    phase: grow
+    plugin: pm-marketing-growth
+    produces: [north-star]
+    requires: []
+    enhancedBy: [strategy, business-model, metrics]
+    effort: moderate
+    description: "Define North Star Metric + 3-5 input metrics"
+    command: "/north-star"
+
+  value-prop-statements:
+    phase: grow
+    plugin: pm-marketing-growth
+    produces: [value-statements]
+    requires: []
+    enhancedBy: [value-prop, personas, icp, gtm-plan]
+    effort: quick
+    description: "Marketing, sales, and onboarding value prop statements"
+    command: "/market-product"
+
+  positioning-ideas:
+    phase: grow
+    plugin: pm-marketing-growth
+    produces: [positioning]
+    requires: []
+    enhancedBy: [competitive-landscape, value-prop, personas]
+    effort: quick
+    description: "Brainstorm differentiated positioning ideas"
+    command: "/market-product"
+
+  product-name:
+    phase: grow
+    plugin: pm-marketing-growth
+    produces: [product-name]
+    requires: []
+    enhancedBy: [positioning, value-prop, personas]
+    effort: quick
+    description: "Generate 5 unique, memorable product names with rationale"
+    command: "/market-product"
+
+  marketing-ideas:
+    phase: grow
+    plugin: pm-marketing-growth
+    produces: [marketing-plan]
+    requires: []
+    enhancedBy: [icp, gtm-plan, positioning, growth-loops]
+    effort: moderate
+    description: "Generate 5 creative, cost-effective marketing ideas with channels"
+    command: "/market-product"
+
+  # ==========================================================================
+  # UTILITY — pm-execution + pm-toolkit (phase-agnostic)
+  # ==========================================================================
+
+  release-notes:
+    phase: any
+    plugin: pm-execution
+    produces: [release-notes]
+    requires: []
+    enhancedBy: [prd, stories]
+    effort: quick
+    description: "User-facing release notes from technical artifacts"
+    command: "/sprint"
+
+  summarize-meeting:
+    phase: any
+    plugin: pm-execution
+    produces: [meeting-notes]
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "Synthesize meeting transcript into decisions and action items"
+    command: "/meeting-notes"
+
+  dummy-dataset:
+    phase: any
+    plugin: pm-execution
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "Generate realistic test data (CSV, JSON, SQL, Python)"
+    command: "/generate-data"
+
+  review-resume:
+    phase: any
+    plugin: pm-toolkit
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "PM resume review against 10 best practices"
+
+  grammar-check:
+    phase: any
+    plugin: pm-toolkit
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "Grammar, logic, and flow checking"
+
+  draft-nda:
+    phase: any
+    plugin: pm-toolkit
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: moderate
+    description: "Draft a Non-Disclosure Agreement"
+
+  privacy-policy:
+    phase: any
+    plugin: pm-toolkit
+    produces: []
+    requires: []
+    enhancedBy: []
+    effort: moderate
+    description: "Draft a privacy policy"
+
+  # ==========================================================================
+  # LEARNING DESIGN PHASE — pm-learning-design
+  # ==========================================================================
+
+  design-learning-objectives:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [learning-objectives]
+    requires: []
+    enhancedBy: [personas, strategy, PRD]
+    effort: moderate
+    description: "Design measurable learning objectives using Backward Design and Bloom's Revised Taxonomy"
+    command: "/learning-design"
+
+  design-curriculum-structure:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [curriculum-structure]
+    requires: [learning-objectives]
+    enhancedBy: [personas, market-segments]
+    effort: deep
+    description: "Design scope, sequence, and structural hierarchy of a learning curriculum"
+    command: "/learning-design"
+
+  select-pedagogy-model:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [pedagogy-model]
+    requires: [learning-objectives]
+    enhancedBy: [personas, curriculum-structure]
+    effort: moderate
+    description: "Select and configure the right pedagogical model (spaced repetition, mastery, scaffolding, etc.)"
+    command: "/learning-design"
+
+  design-assessment:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [assessment-design]
+    requires: [learning-objectives]
+    enhancedBy: [pedagogy-model, curriculum-structure]
+    effort: moderate
+    description: "Design formative and summative assessments that measure real learning"
+    command: "/learning-design"
+
+  design-learning-path:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [learning-path]
+    requires: [curriculum-structure, pedagogy-model]
+    enhancedBy: [assessment-design, personas]
+    effort: deep
+    description: "Design adaptive learning paths with personalized progression and review systems"
+    command: "/learning-design"
+
+  design-feedback-system:
+    phase: design-learning
+    plugin: pm-learning-design
+    produces: [feedback-system]
+    requires: [learning-objectives, assessment-design]
+    enhancedBy: [pedagogy-model, personas]
+    effort: moderate
+    description: "Design feedback that drives learning — graduated error response, growth mindset, parent reporting"
+    command: "/learning-design"
+
+  evaluate-learning-efficacy:
+    phase: validate
+    plugin: pm-learning-design
+    produces: [efficacy-framework]
+    requires: [learning-objectives, assessment-design]
+    enhancedBy: [metrics, cohort-data]
+    effort: deep
+    description: "Measure whether the product actually produces learning outcomes using Kirkpatrick's model"
+    command: "/learning-design"
+
+  # ==========================================================================
+  # CHILD SAFETY — pm-child-safety (phase: any — applies across lifecycle)
+  # ==========================================================================
+
+  assess-coppa-compliance:
+    phase: any
+    plugin: pm-child-safety
+    produces: [compliance-audit]
+    requires: []
+    enhancedBy: [PRD, personas]
+    effort: deep
+    description: "Audit against COPPA, GDPR-K, and Vietnam PDPD requirements for children's data"
+    command: "/child-safety"
+
+  design-parental-consent:
+    phase: any
+    plugin: pm-child-safety
+    produces: [consent-flow]
+    requires: [compliance-audit]
+    enhancedBy: [personas, journey-map]
+    effort: moderate
+    description: "Design verifiable parental consent flow for children's products"
+    command: "/child-safety"
+
+  design-age-gating:
+    phase: any
+    plugin: pm-child-safety
+    produces: [age-gating]
+    requires: [personas]
+    enhancedBy: [compliance-audit, learning-objectives]
+    effort: moderate
+    description: "Design age-appropriate feature gating by developmental stage"
+    command: "/child-safety"
+
+  audit-data-minimization:
+    phase: any
+    plugin: pm-child-safety
+    produces: [data-minimization-audit]
+    requires: [compliance-audit]
+    enhancedBy: [PRD]
+    effort: moderate
+    description: "Audit and minimize data collection from children"
+    command: "/child-safety"
+
+  design-safe-ux:
+    phase: any
+    plugin: pm-child-safety
+    produces: [safe-ux-design]
+    requires: []
+    enhancedBy: [compliance-audit, age-gating, personas]
+    effort: moderate
+    description: "Design child-safe interaction patterns, content moderation, and protective UX"
+    command: "/child-safety"
+
+  # ==========================================================================
+  # ENGAGEMENT DESIGN — pm-engagement-design
+  # ==========================================================================
+
+  design-gamification-system:
+    phase: grow
+    plugin: pm-engagement-design
+    produces: [gamification-system]
+    requires: [learning-objectives]
+    enhancedBy: [pedagogy-model, personas, age-gating]
+    effort: deep
+    description: "Design gamification that reinforces learning — rewards, badges, levels tied to mastery"
+    command: "/engagement-design"
+
+  design-progression-mechanics:
+    phase: grow
+    plugin: pm-engagement-design
+    produces: [progression-mechanics]
+    requires: [curriculum-structure, learning-path]
+    enhancedBy: [gamification-system, pedagogy-model]
+    effort: moderate
+    description: "Design skill trees, difficulty curves, and mastery visualization"
+    command: "/engagement-design"
+
+  design-habit-loops:
+    phase: grow
+    plugin: pm-engagement-design
+    produces: [habit-system]
+    requires: [personas]
+    enhancedBy: [gamification-system, feedback-system, age-gating]
+    effort: moderate
+    description: "Design ethical habit loops — triggers, streaks, session design, and re-engagement"
+    command: "/engagement-design"
+
+  design-social-learning:
+    phase: grow
+    plugin: pm-engagement-design
+    produces: [social-learning]
+    requires: [personas, age-gating]
+    enhancedBy: [gamification-system, safe-ux-design]
+    effort: deep
+    description: "Design age-appropriate social and collaborative learning features"
+    command: "/engagement-design"
+
+  design-parent-engagement:
+    phase: grow
+    plugin: pm-engagement-design
+    produces: [parent-engagement]
+    requires: [personas, feedback-system]
+    enhancedBy: [gamification-system, learning-objectives]
+    effort: moderate
+    description: "Design parent dashboards, communication cadence, and renewal motivation"
+    command: "/engagement-design"
+
+# ============================================================================
+# RECOMMENDED PATHS
+# ============================================================================
+# These are common sequences the orchestrator can suggest as accelerators.
+# Users can follow them end-to-end or jump in at any point.
+# ============================================================================
+
+paths:
+  new-product:
+    name: "New Product (0 → 1)"
+    description: "Full journey from idea to launch for a brand new product"
+    steps:
+      - brainstorm-ideas-new
+      - user-personas
+      - competitor-analysis
+      - market-sizing
+      - identify-assumptions-new
+      - prioritize-assumptions
+      - brainstorm-experiments-new
+      - product-vision
+      - startup-canvas        # strategy + business model in one
+      - value-proposition
+      - pricing-strategy
+      - create-prd
+      - user-stories
+      - brainstorm-okrs
+      - pre-mortem
+      - beachhead-segment
+      - ideal-customer-profile
+      - gtm-strategy
+      - north-star-metric
+      - growth-loops
+
+  existing-product-feature:
+    name: "New Feature (existing product)"
+    description: "Discovery through delivery for a feature on a live product"
+    steps:
+      - analyze-feature-requests
+      - brainstorm-ideas-existing
+      - identify-assumptions-existing
+      - prioritize-assumptions
+      - brainstorm-experiments-existing
+      - opportunity-solution-tree
+      - create-prd
+      - user-stories
+      - test-scenarios
+      - sprint-plan
+      - metrics-dashboard
+      - release-notes
+
+  strategic-pivot:
+    name: "Strategic Pivot"
+    description: "Re-evaluate strategy when market conditions change"
+    steps:
+      - competitor-analysis
+      - sentiment-analysis
+      - swot-analysis
+      - pestle-analysis
+      - porters-five-forces
+      - product-strategy
+      - ansoff-matrix
+      - value-proposition
+      - monetization-strategy
+      - outcome-roadmap
+
+  launch-prep:
+    name: "Launch Preparation"
+    description: "Get launch-ready when you have a product but no GTM plan"
+    steps:
+      - user-personas
+      - competitor-analysis
+      - beachhead-segment
+      - ideal-customer-profile
+      - value-proposition
+      - competitive-battlecard
+      - gtm-strategy
+      - gtm-motions
+      - north-star-metric
+      - marketing-ideas
+      - growth-loops
+      - pre-mortem
+
+  discovery-sprint:
+    name: "Discovery Sprint"
+    description: "Rapid 1-week discovery cycle"
+    steps:
+      - user-personas
+      - brainstorm-ideas-existing
+      - identify-assumptions-existing
+      - prioritize-assumptions
+      - interview-script
+      - brainstorm-experiments-existing
+      - metrics-dashboard
+
+  # --- EdTech-Specific Paths ---
+
+  edtech-new-learning-feature:
+    name: "New Learning Feature (EdTech)"
+    description: "Full journey from learning objective to launch-ready feature for an EdTech product"
+    steps:
+      - user-personas
+      - design-learning-objectives
+      - select-pedagogy-model
+      - design-curriculum-structure
+      - design-assessment
+      - design-feedback-system
+      - design-learning-path
+      - design-gamification-system
+      - design-progression-mechanics
+      - create-prd
+      - user-stories
+      - assess-coppa-compliance
+      - design-safe-ux
+      - test-scenarios
+      - evaluate-learning-efficacy
+
+  edtech-retention-sprint:
+    name: "EdTech Retention Sprint"
+    description: "Diagnose and fix retention through engagement and parent experience"
+    steps:
+      - analyze-feature-requests
+      - user-personas
+      - design-habit-loops
+      - design-gamification-system
+      - design-progression-mechanics
+      - design-parent-engagement
+      - design-social-learning
+      - evaluate-learning-efficacy
+      - metrics-dashboard
+
+  edtech-compliance-review:
+    name: "EdTech Compliance Review"
+    description: "Full child safety and compliance audit for an EdTech product"
+    steps:
+      - assess-coppa-compliance
+      - audit-data-minimization
+      - design-parental-consent
+      - design-age-gating
+      - design-safe-ux

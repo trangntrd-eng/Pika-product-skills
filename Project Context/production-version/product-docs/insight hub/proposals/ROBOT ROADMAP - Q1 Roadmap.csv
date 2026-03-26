@@ -1,0 +1,47 @@
+Pillars,Feature \ User story,Cách làm,Loại nghiệp vụ,"W1/Feb
+02/02 - 08/02","W2/Feb
+09/02 - 13/02","W3/Feb
+16/02 - 21/02","W4/Feb
+23/02 - 27/02",W1/Mar,W2/Mar,W3/Mar,W4/Mar,W1/Apr,W2/Apr,W3/Apr,W4/Apri
+Orchestrator,Re-opening,Upgrade cơ chế re-opening từ một câu chào hỏi theo ngữ cảnh thành dạng talk ngắn trước khi tiếp tục hoạt động,Iterate,,,v1,,v2,,,,,,,
+,Transition,Test 2 - 3 concept transition khác nhau. Đánh giá impact với engagement và mức độ hào hứng với các dạng học.,RnD,,,,,v1,,,,,,,
+,In-session request,"Tối ưu năng lực xử lý các request hiện tại (tối ưu prompt, scale content...)
+Bổ sung khả năng xử lý các request tạo aha moment cao (nhảy, tạo biểu cảm...)",Iterate,v1,,v2,,,,,,,,,
+,To-do list customization,Research tập user có nhu cầu customize.,Iterate,,,,,,,,,,,,
+Buddy Talk,Memory,"Top các high-value use case: nhớ memory trong ngày, memory người thân, chủ động follow-up các event",Iterate,,,v2.1,,v2.2,,,,,,,
+,Talk topics & activities,Scale các dạng hoạt động dựa trên nội dung / requests của user.,Iterate,,,v1,,,,,,,,,
+,Personalized talk recommendation ,"RnD logic chọn topic và content angle để khai thác, tương tác sâu hơn 
+
+https://stepupenglish.sg.larksuite.com/docx/CbJfd2mL7oJQ6mxv9iKlAMHJgHe",RnD,,,,,v1,,,,,,,
+,Personality,"Chuyển cơ chế transfer agent, tăng độ chủ động và thông minh trong cách giao tiếp",Iterate,,,,,v1,,,,,,,
+,Language mode,Tối ưu độ chính xác ngôn ngữ Anh - Việt,Iterate,,,,,,,,,,,,
+,Event-based greetings,Chuỗi talk theme Tết,Iterate,,,Hoạt động theme Tết,,,,,,,,,
+Parental Control,Customize English lesson,"Phụ huynh tự set up chủ đề, từ vựng muốn giao cho con",RnD,,,,,,,,,,,,
+,Notification system,Quy hoạch lại hệ thống noti. Tăng mapping trạng thái giữa robot và app,Iterate,,,,,,,,,,,,
+,Remote control ,Quy hoạch lại các phần điều khiển và profile trên app phụ huynh. Cho phép chủ động cập nhật firmware / reset wifi trên app.,Iterate,,,,,,,,,,,,
+,Subscription management,"Xem và quản lý thời hạn bảo hành, phần mềm",Operational,,,,,,,,,,,,
+Gamification,Ranking,"Cơ chế xếp hạng leo rank, kích thích user quay lại thường xuyên",RnD,,,,,v1,,,,,,,
+,Badge,,RnD,,,,,,,,,,,,
+,Virtual gift-exchange,,RnD,,,,,,,,,,,,
+Onboarding,Parental guide,Tối ưu luồng dẫn dắt trên app phụ huynh tới các aha moment,Iterate,,,,,v2,,,,,,,
+,First lessons ,Giúp priming mental model của user về các dạng hoạt động học tốt hơn. Các bài học đầu tiên khớp trình độ hơn.,Iterate,,,v2,,,,,,,,,
+,First talks,Tăng các trigger tạo UGC trong các bài Talk. Làm mượt các đoạn về UX.,Iterate,,,v2,,,,,,,,,
+Learning Design,Pronunciation and grammar assistant,Thiết kế các cơ chế check / sửa ngữ pháp và phát âm trong khi Talk,Iterate,,,v1,,,,,,,,,
+,Assessment test,Đẩy các bài test đầu vào lên app / robot,Iterate,,,Đẩy bài test lên app,,,,,,,,,
+,Summative test,"Thiết kế các bài test theo chặng, bài đánh giá ngầm xuyên suốt lộ trình",RnD ,,,,,v1,,,,,,,
+,Adaptive learning logic ,"Thiết kế cơ chế tạo các bài học giúp củng cố kiến thức, follow-up các bài test chặng / đánh giá ngầm",RnD,,,,,v1,,,,,,,
+,Embedded English practice in Talk mode,Kích hoạt năng lực nói tiếng Anh tăng tiến thông qua các dạng bài Talk,Iterate,,,,,v1,,,,,,,
+Content Production,Pre-A1,,Content Pipeline,,,,,,,,,,,,
+,A1,,Content Pipeline,,,,,,,,,,,,
+,A2,,Content Pipeline,,,,,,,,,,,,
+,B1,,Content Pipeline,,,,,,,,,,,,
+Core AI & Tech,STT,,,,,,,,,,,,,,
+,TTS,,,,,,,,,,,,,,
+,AI Cost ,,,,,,,,,,,,,,
+,Scale CCU,,,,,,,,,,,,,,
+,Wakeword,,,,,,,,,,,,,,
+Extended Value Proposition,Parent / Child Assistant,"Thiết kế các tính năng trợ lý hàng ngày, tăng mức độ must-have của Pika ",RnD,,,Test tích hợp các tool (chụp ảnh),,,,,,,,,
+,"STEM subjects (Toán, Lý, Hoá, Khoa học)",Scale các dạng bài tìm hiểu kiến thức khoa học,Content Pipeline,,,Automate pipeline gen assets,,Đẩy nội dung lên production,,,,,,,
+,"Social sciences (Văn, Sử, Địa)",,,,,,,v1,,,,,,,
+,Other Language (Tiếng Trung / tiếng Hàn),,,,,Ghép model tiếng Hàn / Anh,,,,,,,,,
+Product MKT,Virtual Pika for trial users,,,,,,,,,,,,,,

@@ -1,453 +1,356 @@
-![GitHub stars](https://img.shields.io/github/stars/phuryn/pm-skills)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://github.com/phuryn/pm-skills/blob/main/LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](https://github.com/phuryn/pm-skills/blob/main/CONTRIBUTING.md)
+# Pika Product Skills — Bộ Kỹ Năng PM Cho Team Product Pika
 
-# PM Skills Marketplace: The AI Operating System for Better Product Decisions
+> 84 skills, 40 workflows, 12 plugins — từ discovery đến learning design, execution, launch, và growth.
+> Thiết kế riêng cho EdTech B2C nhắm đến trẻ em và phụ huynh.
 
-> 65 PM skills and 36 chained workflows across 8 plugins. Claude Code, Cowork, and more. From discovery to strategy, execution, launch, and growth. 
+---
 
-![Plugin overview](.docs/images/plugins-overview.webp)
+## Bắt đầu nhanh
 
-Designed for Claude Code and Cowork. Skills compatible with other AI assistants.
+| Bạn muốn... | Dùng lệnh |
+|---|---|
+| Đánh giá project đang ở đâu | `/pm` |
+| Chạy vòng discovery | `/discover` |
+| Viết PRD | `/write-prd` |
+| Thiết kế trải nghiệm học | `/learning-design` |
+| Kiểm tra an toàn trẻ em | `/child-safety` |
+| Thiết kế engagement & gamification | `/engagement-design` |
+| Lên chiến lược sản phẩm | `/strategy` |
+| Chuẩn bị launch | `/plan-launch` |
 
-## Start Here
+Hoặc dùng `/pm` để orchestrator tự đánh giá project và gợi ý bước tiếp theo.
 
-New idea? → `/discover`  
-Need strategic clarity? → `/strategy`  
-Writing a PRD? → `/write-prd`  
-Planning a launch? → `/plan-launch`  
-Defining metrics? → `/north-star`
+---
 
-If this project helps you, ⭐ the repo.
+## Cấu trúc tổng quan
 
-## Why PM Skills Marketplace?
+Workspace này gồm **12 plugins** chia làm 3 nhóm:
 
-Generic AI gives you text. PM Skills Marketplace gives you structure.
+### Nhóm 1 — PM Cốt Lõi (từ PM Skills Marketplace gốc)
 
-Each skill encodes a proven PM framework — discovery, assumption mapping, prioritization, strategy — and walks you through it step by step. You get the rigor of Teresa Torres, Marty Cagan, and Alberto Savoia built into your daily workflow, not sitting on a bookshelf.
+Đây là bộ skill PM tổng quát, dùng được cho mọi loại sản phẩm:
 
-The result: better product decisions, not just faster documents.
+| Plugin | Mô tả | Skills | Lệnh chính |
+|--------|--------|--------|------------|
+| **pm-product-discovery** | Ideation, thí nghiệm, giả định, phỏng vấn, OST | 13 | `/discover`, `/interview`, `/brainstorm` |
+| **pm-product-strategy** | Vision, business model, pricing, SWOT, Porter | 12 | `/strategy`, `/business-model`, `/pricing` |
+| **pm-execution** | PRD, OKR, roadmap, sprint, user stories | 15 | `/write-prd`, `/plan-okrs`, `/sprint` |
+| **pm-market-research** | Persona, phân khúc, journey map, sizing | 7 | `/research-users`, `/competitive-analysis` |
+| **pm-data-analytics** | SQL, phân tích cohort, A/B test | 3 | `/write-query`, `/analyze-cohorts` |
+| **pm-go-to-market** | GTM, growth loops, beachhead, battlecard | 6 | `/plan-launch`, `/growth-strategy` |
+| **pm-marketing-growth** | Positioning, North Star, naming | 5 | `/market-product`, `/north-star` |
+| **pm-toolkit** | Resume review, NDA, privacy policy, grammar | 4 | `/write-prd`, `/proofread` |
 
-## How It Works (Skills, Commands, Plugins)
+### Nhóm 2 — EdTech Chuyên Sâu (mới tạo cho Pika)
 
-**Skills** are the building blocks of the marketplace. Each skill gives Claude domain knowledge, analytical frameworks, or a guided workflow for a specific PM task. Some skills also work as reusable foundations that multiple commands share. 
+Đây là 3 plugins đặc thù cho sản phẩm EdTech nhắm vào trẻ em — thứ mà bộ PM gốc không có:
 
-Skills are loaded automatically when relevant to the conversation — no explicit invocation needed. If needed (e.g., prioritizing skills over general knowledge), you can **force loading skills** with `/plugin-name:skill-name` or `/skill-name` (Claude will add the prefix).
+| Plugin | Mô tả | Skills | Lệnh chính |
+|--------|--------|--------|------------|
+| **pm-learning-design** | Mục tiêu học tập, chương trình, mô hình sư phạm, đánh giá, feedback, đo lường hiệu quả | 7 | `/learning-design` |
+| **pm-child-safety** | COPPA/GDPR-K, consent phụ huynh, age gating, data minimization, safe UX | 5 | `/child-safety` |
+| **pm-engagement-design** | Gamification, progression, habit loop, social learning, parent engagement | 5 | `/engagement-design` |
 
-**Commands** are user-triggered workflows invoked with `/command-name`. They chain one or more skills into an end-to-end process. For example, `/discover` chains four skills together: brainstorm-ideas → identify-assumptions → prioritize-assumptions → brainstorm-experiments.
+### Nhóm 3 — Orchestrator (bộ điều phối)
 
-**Plugins** group related skills and commands into installable packages. Each plugin covers a PM domain — discovery, strategy, execution, and so on. Installing the marketplace gives you all 8 plugins at once.
+| Plugin | Mô tả | Lệnh |
+|--------|--------|------|
+| **pm-orchestrator** | Đánh giá trạng thái project, gợi ý skill phù hợp, quản lý phụ thuộc giữa các bước, inject context từ artifacts trước đó | `/pm` |
 
-![How skills work](.docs/images/how-skills-work.webp)
+---
 
-Commands use skills. Some skills serve multiple commands. Some skills (like `prioritization-frameworks` or `opportunity-solution-tree`) are standalone references that Claude draws on whenever relevant — no command needed.
+## Orchestrator — Cách hoạt động
 
-Commands are designed to flow into each other, matching the PM workflow. After any command completes, it suggests relevant next commands — just follow the prompts.
+`/pm` là lệnh chính điều phối toàn bộ. Nó có 5 chế độ:
 
-## Installation
+| Cách gọi | Chế độ | Ví dụ |
+|-----------|--------|-------|
+| `/pm` (không có gì thêm) | **Đánh giá** — project đang ở phase nào, thiếu gì, nên làm gì tiếp | `/pm` |
+| `/pm` + deliverable cụ thể | **Thực thi** — kiểm tra phụ thuộc, inject context, chạy skill | `/pm Giúp mình viết PRD` |
+| `/pm` + mục tiêu lớn | **Theo path** — chạy workflow nhiều bước với checkpoint | `/pm Chuẩn bị launch Photo-to-Lesson` |
+| `/pm` + data mới | **Tiếp nhận** — ghi nhận data mới, gợi ý skill xử lý | `/pm Mình vừa phỏng vấn xong 5 user` |
+| `/pm` + câu hỏi | **Tư vấn** — trả lời dựa trên toàn bộ context project | `/pm Nên ưu tiên retention hay acquisition?` |
 
-### Claude Cowork (recommended for non-developers)
+### Lifecycle Phases
 
-1. Open **Customize** (bottom-left)
-2. Go to **Browse plugins** → **Personal** → **+**
-3. Select **Add marketplace from GitHub**
-4. Enter: `phuryn/pm-skills`
+Orchestrator theo dõi project qua **7 phase** (bao gồm phase Learning Design mới cho EdTech):
 
-All 8 plugins install automatically. You get both commands (`/discover`, `/strategy`, etc.) and skills.
-
-![Installing PM Skills in Claude Cowork](.docs/images/pm-skills-install.gif)
-
-### Claude Code (CLI)
-
-```bash
-# Step 1: Add the marketplace
-claude plugin marketplace add phuryn/pm-skills
-
-# Step 2: Install individual plugins
-claude plugin install pm-toolkit@pm-skills
-claude plugin install pm-product-strategy@pm-skills
-claude plugin install pm-product-discovery@pm-skills 
-claude plugin install pm-market-research@pm-skills 
-claude plugin install pm-data-analytics@pm-skills
-claude plugin install pm-marketing-growth@pm-skills
-claude plugin install pm-go-to-market@pm-skills
-claude plugin install pm-execution@pm-skills
+```
+Discovery → Strategy → Learning Design → Planning → Validation → Go-to-Market → Growth
 ```
 
-### Other AI assistants (skills only)
+Mỗi phase có exit criteria rõ ràng. Orchestrator sẽ cảnh báo nếu bạn nhảy phase mà chưa hoàn thành artifacts cần thiết.
 
-The `skills/*/SKILL.md` files follow the universal skill format and work with any tool that reads it. Commands (`/slash-commands`) are Claude-specific.
+### Paths dựng sẵn cho EdTech
 
-| Tool | How to use | What works |
-|------|-----------|------------|
-| **Gemini CLI** | Copy skill folders to `.gemini/skills/` | Skills only |
-| **OpenCode** | Copy skill folders to `.opencode/skills/` | Skills only |
-| **Cursor** | Copy skill folders to `.cursor/skills/` | Skills only |
-| **Codex CLI** | Copy skill folders to `.codex/skills/` | Skills only |
-| **Kiro** | Copy skill folders to `.kiro/skills/` | Skills only |
+| Path | Mô tả | Số bước |
+|------|--------|---------|
+| `edtech-new-learning-feature` | Từ learning objective → curriculum → pedagogy → PRD → test → efficacy | 15 |
+| `edtech-retention-sprint` | Chẩn đoán retention → engagement → gamification → parent experience | 9 |
+| `edtech-compliance-review` | COPPA audit → data minimization → consent → age gating → safe UX | 5 |
+| `new-product` | Journey 0→1 đầy đủ (PM tổng quát) | 19 |
+| `existing-product-feature` | Feature mới trên sản phẩm hiện có | 12 |
+| `discovery-sprint` | Discovery nhanh 1 tuần | 7 |
 
-```bash
-# Example: copy all skills for OpenCode (project-level)
-for plugin in pm-*/; do
-  mkdir -p .opencode/skills/
-  cp -r "$plugin/skills/"* .opencode/skills/ 2>/dev/null
-done
+---
 
-# Example: copy all skills for Gemini CLI (global)
-for plugin in pm-*/; do
-  cp -r "$plugin/skills/"* ~/.gemini/skills/ 2>/dev/null
-done
+## Chi tiết 3 Plugin EdTech Mới
+
+### pm-learning-design — Thiết kế trải nghiệm học
+
+Đây là plugin quan trọng nhất cho EdTech. Nó giải quyết câu hỏi: **"Feature này thực sự dạy được gì?"**
+
+| Skill | Mô tả | Framework |
+|-------|--------|-----------|
+| `design-learning-objectives` | Xác định mục tiêu học tập theo Bloom's Taxonomy + Backward Design | Wiggins & McTighe, Anderson & Krathwohl |
+| `select-pedagogy-model` | Chọn mô hình sư phạm phù hợp (spaced repetition, mastery, scaffolding, game-based...) | Bloom, Vygotsky, Gee, Ebbinghaus |
+| `design-curriculum-structure` | Thiết kế cấu trúc chương trình: scope, sequence, module, unit, lesson | Bruner (Spiral Curriculum) |
+| `design-assessment` | Thiết kế đánh giá formative + summative + diagnostic | Webb's DOK, Black & Wiliam |
+| `design-feedback-system` | Thiết kế hệ thống feedback: phản hồi lỗi, growth mindset, báo cáo phụ huynh | Hattie & Timperley, Dweck |
+| `design-learning-path` | Thiết kế lộ trình học adaptive: entry point, progression, review, edge case | Vygotsky (ZPD), Csikszentmihalyi (Flow) |
+| `evaluate-learning-efficacy` | Đo lường hiệu quả học tập: pre/post test, effect size, Kirkpatrick model | Kirkpatrick, Hattie, Cohen |
+
+**Khi nào dùng:** Trước khi viết PRD cho bất kỳ feature học tập nào. Learning design brief sẽ bổ sung cho PRD — PRD nói "build cái gì", learning design brief nói "dạy như thế nào".
+
+### pm-child-safety — An toàn trẻ em & Compliance
+
+| Skill | Mô tả | Áp dụng |
+|-------|--------|---------|
+| `assess-coppa-compliance` | Audit theo COPPA (US), GDPR-K (EU), và Nghị định 13/2023 (VN) | Khi launch feature mới, vào thị trường mới, hoặc review định kỳ |
+| `design-parental-consent` | Thiết kế flow xin phép phụ huynh (5 bước: age gate → identify → notice → consent → confirm) | Khi thiết kế onboarding |
+| `design-age-gating` | Phân quyền feature theo lứa tuổi (dựa trên Piaget) | Khi product phục vụ nhiều lứa tuổi |
+| `audit-data-minimization` | Kiểm tra và giảm thiểu data thu thập từ trẻ em | Khi review privacy, chuẩn bị app store |
+| `design-safe-ux` | Kiểm tra dark pattern, content safety, session management, communication safety | Khi thiết kế bất kỳ tương tác nào cho trẻ |
+
+**Khi nào dùng:** Trước mỗi lần submit app store, khi thêm feature thu thập data mới, hoặc ít nhất mỗi năm 1 lần.
+
+### pm-engagement-design — Engagement & Retention
+
+| Skill | Mô tả | Framework |
+|-------|--------|-----------|
+| `design-gamification-system` | Thiết kế reward economy, badge, level gắn với learning milestone (không phải screen time) | SDT (Deci & Ryan), Octalysis (Yu-kai Chou) |
+| `design-progression-mechanics` | Skill tree, difficulty curve, mastery visualization | Flow Theory (Csikszentmihalyi) |
+| `design-habit-loops` | Trigger, streak (ethical), session start/end, re-engagement | Hooked (Nir Eyal) + ethical adaptation |
+| `design-social-learning` | Family learning, peer challenge, collaborative goals (age-appropriate) | Vygotsky, Topping (Peer Tutoring) |
+| `design-parent-engagement` | Dashboard phụ huynh, communication cadence, conversation starter, renewal support | Hattie (Parental Involvement d=0.51) |
+
+**Khi nào dùng:** Sau khi đã có learning design. Engagement phục vụ learning, không phải ngược lại.
+
+---
+
+## Cách dùng trong thực tế
+
+### Ví dụ 1: Thiết kế feature "Ôn Bài" mới
+
+```
+1. /pm                                    → Đánh giá trạng thái project
+2. /discover Tính năng ôn bài cho Pika    → Discovery: persona, giả định, thí nghiệm
+3. /learning-design Hệ thống ôn bài      → Learning objectives, pedagogy, curriculum
+4. /engagement-design Ôn Bài              → Gamification, habit loop, parent dashboard
+5. /child-safety Ôn Bài                   → Compliance check
+6. /write-prd Ôn Bài                      → PRD (auto-inject learning design + engagement context)
+```
+
+### Ví dụ 2: Cải thiện retention H1 2026
+
+```
+1. /pm Retention đang giảm, nên làm gì?  → Orchestrator gợi ý retention sprint path
+2. /analyze-feedback [đính kèm feedback]  → Phân tích feedback user
+3. /engagement-design Cải thiện retention → Habit loop, gamification, parent engagement
+4. /pm Tiếp theo nên làm gì?             → Gợi ý bước tiếp
+```
+
+### Ví dụ 3: Chuẩn bị launch ra thị trường mới
+
+```
+1. /child-safety Pika Robot — thị trường US  → COPPA compliance audit
+2. /plan-launch Pika Robot cho thị trường US → GTM strategy
+3. /strategy Mở rộng sang US                → Chiến lược sản phẩm
 ```
 
 ---
 
-## Available Plugins
-
-<details>
-<summary><strong>1. pm-product-discovery</strong> — Ideation, experiments, assumption testing, OSTs, interviews (13 skills, 5 commands)</summary>
-
-**Skills (13):**
-
-- `brainstorm-ideas-existing` — Multi-perspective ideation for existing products (PM, Designer, Engineer)
-- `brainstorm-ideas-new` — Ideation for new products in initial discovery
-- `brainstorm-experiments-existing` — Design experiments to test assumptions for existing products
-- `brainstorm-experiments-new` — Design lean startup pretotypes for new products (Alberto Savoia)
-- `identify-assumptions-existing` — Identify risky assumptions across Value, Usability, Viability, and Feasibility
-- `identify-assumptions-new` — Identify risky assumptions across 8 risk categories including Go-to-Market, Strategy, and Team
-- `prioritize-assumptions` — Prioritize assumptions using an Impact × Risk matrix with experiment suggestions
-- `prioritize-features` — Prioritize a feature backlog based on impact, effort, risk, and strategic alignment
-- `analyze-feature-requests` — Analyze and categorize customer feature requests by theme and strategic fit
-- `opportunity-solution-tree` — Build an Opportunity Solution Tree (Teresa Torres) — outcome → opportunities → solutions → experiments
-- `interview-script` — Create a structured customer interview script with JTBD probing questions
-- `summarize-interview` — Summarize an interview transcript into JTBD, satisfaction signals, and action items
-- `metrics-dashboard` — Design a product metrics dashboard with North Star, input metrics, and alert thresholds
-
-**Commands (5):**
-
-- `/discover` — Full discovery cycle: ideation → assumption mapping → prioritization → experiment design
-- `/brainstorm` — Multi-perspective ideation (`ideas|experiments` × `existing|new`)
-- `/triage-requests` — Analyze and prioritize a batch of feature requests
-- `/interview` — Prepare an interview script or summarize a transcript (`prep|summarize`)
-- `/setup-metrics` — Design a product metrics dashboard
-
-**Examples:**
-
-Skills:
-- `What are the riskiest assumptions for our AI writing assistant idea?`
-- `Help me build an Opportunity Solution Tree for improving user activation`
-- `Prioritize these 12 feature requests from our enterprise customers [attach CSV]`
-
-Commands:
-- `/discover AI-powered meeting summarizer for remote teams`
-- `/brainstorm experiments existing — We need to reduce churn in our onboarding flow`
-- `/interview prep — We're interviewing enterprise buyers about their procurement workflow`
-
-</details>
-
-<details>
-<summary><strong>2. pm-product-strategy</strong> — Vision, business models, pricing, competitive landscape (12 skills, 5 commands)</summary>
-
-Product strategy, vision, business models, pricing, and macro environment analysis. Covers the full strategic toolkit from vision crafting through competitive landscape scanning.
-
-**Skills (12):**
-
-- `product-strategy` — Comprehensive 9-section Product Strategy Canvas (vision → defensibility)
-- `startup-canvas` — Startup Canvas combining Product Strategy (9 sections) + Business Model — an alternative to BMC and Lean Canvas for new products
-- `product-vision` — Craft an inspiring, achievable, and emotional product vision
-- `value-proposition` — 6-part JTBD value proposition (Who, Why, What before, How, What after, Alternatives)
-- `lean-canvas` — Lean Canvas business model for startups and new products
-- `business-model` — Business Model Canvas with all 9 building blocks
-- `monetization-strategy` — Brainstorm 3–5 monetization strategies with validation experiments
-- `pricing-strategy` — Pricing models, competitive analysis, willingness-to-pay, and price elasticity
-- `swot-analysis` — SWOT analysis with actionable recommendations
-- `pestle-analysis` — Macro environment: Political, Economic, Social, Technological, Legal, Environmental
-- `porters-five-forces` — Competitive forces analysis (rivalry, suppliers, buyers, substitutes, new entrants)
-- `ansoff-matrix` — Growth strategy mapping across markets and products
-
-**Commands (5):**
-
-- `/strategy` — Create a complete 9-section Product Strategy Canvas
-- `/business-model` — Explore business models (`lean|full|startup|value-prop|all`)
-- `/value-proposition` — Design a value proposition using the 6-part JTBD template
-- `/market-scan` — Macro environment analysis combining SWOT + PESTLE + Porter's + Ansoff
-- `/pricing` — Design a pricing strategy with competitive analysis and experiments
-
-**Examples:**
-
-Skills:
-- `Compare Lean Canvas vs Business Model Canvas vs Startup Canvas for my marketplace startup`
-- `Design a value proposition for our AI writing assistant targeting non-native English speakers`
-- `Run a Porter's Five Forces analysis for the project management SaaS market`
-
-Commands:
-- `/strategy B2B project management tool for agencies`
-- `/business-model startup — AI writing tool for non-native English speakers`
-- `/value-proposition SaaS onboarding tool for enterprise customers`
-
-</details>
-
-<details>
-<summary><strong>3. pm-execution</strong> — PRDs, OKRs, roadmaps, sprints, retros, release notes, stakeholder management (15 skills, 10 commands)</summary>
-
-Day-to-day product management: PRDs, OKRs, roadmaps, sprints, retrospectives, release notes, pre-mortems, stakeholder management, user stories, and prioritization frameworks.
-
-**Skills (15):**
-
-- `create-prd` — Comprehensive 8-section PRD template
-- `brainstorm-okrs` — Team-level OKRs aligned with company objectives
-- `outcome-roadmap` — Transform a feature list into an outcome-focused roadmap
-- `sprint-plan` — Sprint planning with capacity estimation, story selection, and risk identification
-- `retro` — Structured sprint retrospective facilitation
-- `release-notes` — User-facing release notes from tickets, PRDs, or changelogs
-- `pre-mortem` — Risk analysis with Tigers/Paper Tigers/Elephants classification
-- `stakeholder-map` — Power × Interest grid with tailored communication plan
-- `summarize-meeting` — Meeting transcript → decisions + action items
-- `user-stories` — User stories following the 3 C's and INVEST criteria
-- `job-stories` — Job stories: When [situation], I want to [motivation], so I can [outcome]
-- `wwas` — Product backlog items in Why-What-Acceptance format
-- `test-scenarios` — Test scenarios: happy paths, edge cases, error handling
-- `dummy-dataset` — Realistic dummy datasets as CSV, JSON, SQL, or Python
-- `prioritization-frameworks` — Reference guide to 9 prioritization frameworks (Opportunity Score, ICE, RICE, MoSCoW, Kano, etc.)
-
-**Commands (10):**
-
-- `/write-prd` — Create a PRD from a feature idea or problem statement
-- `/plan-okrs` — Brainstorm team-level OKRs
-- `/transform-roadmap` — Convert a feature-based roadmap into outcome-focused
-- `/sprint` — Sprint lifecycle (`plan|retro|release`)
-- `/pre-mortem` — Pre-mortem risk analysis on a PRD or launch plan
-- `/meeting-notes` — Summarize a meeting transcript into structured notes
-- `/stakeholder-map` — Map stakeholders and create a communication plan
-- `/write-stories` — Break features into backlog items (`user|job|wwa`)
-- `/test-scenarios` — Generate test scenarios from user stories
-- `/generate-data` — Create realistic dummy datasets
-
-**Examples:**
-
-Skills:
-- `Which prioritization framework should I use for a 50-item backlog?`
-- `Map our stakeholders for the platform migration project`
-- `What's the difference between Opportunity Score, ICE, and RICE?`
-
-Commands:
-- `/write-prd Smart notification system that reduces alert fatigue`
-- `/sprint retro — Here are the notes from our last sprint`
-- `/write-stories job — Break down the "team dashboard" feature into job stories`
-
-</details>
-
-<details>
-<summary><strong>4. pm-market-research</strong> — Personas, segmentation, journey maps, market sizing, competitor analysis (7 skills, 3 commands)</summary>
-
-User research and competitive analysis: personas, segmentation, journey maps, market sizing, competitor analysis, and feedback analysis.
-
-**Skills (7):**
-
-- `user-personas` — Create refined user personas from research data
-- `market-segments` — Identify 3–5 customer segments with demographics, JTBD, and product fit
-- `user-segmentation` — Segment users from feedback data based on behavior, JTBD, and needs
-- `customer-journey-map` — End-to-end journey map with stages, touchpoints, emotions, and pain points
-- `market-sizing` — TAM, SAM, SOM with top-down and bottom-up approaches
-- `competitor-analysis` — Competitor strengths, weaknesses, and differentiation opportunities
-- `sentiment-analysis` — Sentiment analysis and theme extraction from user feedback
-
-**Commands (3):**
-
-- `/research-users` — Build personas, segment users, and map the customer journey
-- `/competitive-analysis` — Analyze the competitive landscape
-- `/analyze-feedback` — Sentiment analysis and segment insights from user feedback
-
-**Examples:**
-
-Skills:
-- `Estimate TAM/SAM/SOM for an AI code review tool in the US market`
-- `Create a customer journey map for our e-commerce checkout flow`
-- `Segment these survey respondents by behavior and needs [attach CSV]`
-
-Commands:
-- `/research-users We have interview data from 12 users of our fitness app`
-- `/competitive-analysis Figma competitors in the design tool space`
-- `/analyze-feedback Here's 200 NPS responses from Q4 [attach file]`
-
-</details>
-
-<details>
-<summary><strong>5. pm-data-analytics</strong> — SQL generation, cohort analysis, A/B test analysis (3 skills, 3 commands)</summary>
-
-Data analytics for PMs: SQL query generation, cohort analysis, and A/B test analysis.
-
-**Skills (3):**
-
-- `sql-queries` — Generate SQL from natural language (BigQuery, PostgreSQL, MySQL)
-- `cohort-analysis` — Retention curves, feature adoption, and engagement trends by cohort
-- `ab-test-analysis` — Statistical significance, sample size validation, and ship/extend/stop recommendations
-
-**Commands (3):**
-
-- `/write-query` — Generate SQL queries from natural language
-- `/analyze-cohorts` — Cohort analysis on user engagement data
-- `/analyze-test` — Analyze A/B test results
-
-**Examples:**
-
-Skills:
-- `How large a sample do I need for 95% confidence with a 2% MDE?`
-- `What retention metrics should I track for a subscription app?`
-
-Commands:
-- `/write-query Show me monthly active users by country for Q4 2025 (BigQuery)`
-- `/analyze-test Here are the results from our checkout flow A/B test [attach CSV]`
-- `/analyze-cohorts Weekly retention for users who signed up in January vs February`
-
-</details>
-
-<details>
-<summary><strong>6. pm-go-to-market</strong> — Beachhead segments, ICPs, messaging, growth loops, GTM motions, battlecards (6 skills, 3 commands)</summary>
-
-Go-to-market strategy: beachhead segments, ideal customer profiles, messaging, growth loops, GTM motions, and competitive battlecards.
-
-**Skills (6):**
-
-- `gtm-strategy` — Full GTM strategy: channels, messaging, success metrics, and launch plan
-- `beachhead-segment` — Identify the first beachhead market segment
-- `ideal-customer-profile` — ICP with demographics, behaviors, JTBD, and needs
-- `growth-loops` — Design sustainable growth loops (flywheels)
-- `gtm-motions` — Evaluate GTM motions and tools (product-led, sales-led, etc.)
-- `competitive-battlecard` — Sales-ready battlecard with objection handling and win strategies
-
-**Commands (3):**
-
-- `/plan-launch` — Full GTM strategy from beachhead to launch plan
-- `/growth-strategy` — Design growth loops and evaluate GTM motions
-- `/battlecard` — Create a competitive battlecard
-
-**Examples:**
-
-Skills:
-- `What's the best beachhead segment for a developer productivity tool?`
-- `Design a growth loop for a B2B SaaS with a freemium tier`
-- `Define our ICP for an AI-powered HR screening platform`
-
-Commands:
-- `/plan-launch AI code review tool targeting mid-size engineering teams`
-- `/battlecard Our CRM vs Salesforce for the SMB market`
-- `/growth-strategy Two-sided marketplace for connecting freelancers with startups`
-
-</details>
-
-<details>
-<summary><strong>7. pm-marketing-growth</strong> — Marketing ideas, positioning, value props, naming, North Star metrics (5 skills, 2 commands)</summary>
-
-Product marketing and growth: marketing ideas, positioning, value proposition statements, product naming, and North Star metrics.
-
-**Skills (5):**
-
-- `marketing-ideas` — Creative, cost-effective marketing ideas with channels and messaging
-- `positioning-ideas` — Product positioning differentiated from competitors
-- `value-prop-statements` — Value proposition statements for marketing, sales, and onboarding
-- `product-name` — Product name brainstorming aligned to brand values and audience
-- `north-star-metric` — North Star Metric + input metrics with business game classification
-
-**Commands (2):**
-
-- `/market-product` — Brainstorm marketing ideas, positioning, value props, and product names
-- `/north-star` — Define your North Star Metric and supporting input metrics
-
-**Examples:**
-
-Skills:
-- `Brainstorm 5 positioning angles that differentiate us from Notion`
-- `What's a good North Star Metric for a two-sided marketplace?`
-- `Generate value prop statements for our sales team's pitch deck`
-
-Commands:
-- `/market-product B2B analytics dashboard for e-commerce managers`
-- `/north-star Two-sided marketplace connecting freelancers with clients`
-
-</details>
-
-<details>
-<summary><strong>8. pm-toolkit</strong> — Resume review, legal documents, proofreading (4 skills, 5 commands)</summary>
-
-PM utilities beyond core product work: resume review, legal documents, and proofreading.
-
-**Skills (4):**
-
-- `review-resume` — PM resume review and tailoring against 10 best practices (XYZ+S formula, keywords, structure)
-- `draft-nda` — Non-Disclosure Agreement with jurisdiction-appropriate clauses
-- `privacy-policy` — Privacy policy covering GDPR/CCPA compliance
-- `grammar-check` — Grammar, logic, and flow checking with targeted fixes
-
-**Commands (5):**
-
-- `/review-resume` — Comprehensive PM resume review
-- `/tailor-resume` — Tailor a resume to a specific job description
-- `/draft-nda` — Draft an NDA
-- `/privacy-policy` — Draft a privacy policy
-- `/proofread` — Check grammar, logic, and flow
-
-**Examples:**
-
-Skills:
-- `Review my PM resume against best practices [attach PDF]`
-- `Check this product announcement for grammar and clarity`
-
-Commands:
-- `/review-resume [attach your PM resume]`
-- `/tailor-resume [attach resume + paste job description]`
-- `/proofread Here's the draft of our Q1 investor update`
-
-</details>
+## Cấu trúc thư mục
+
+```
+pm-skills-main/
+├── pm-orchestrator/            ← Bộ điều phối chính (/pm)
+│   ├── skill-graph.yaml        ← Đồ thị phụ thuộc giữa 84 skills
+│   ├── commands/pm.md          ← Lệnh /pm
+│   └── skills/assess-project/  ← Đánh giá trạng thái project
+│
+├── pm-learning-design/         ← 🆕 Thiết kế trải nghiệm học
+├── pm-child-safety/            ← 🆕 An toàn trẻ em & compliance
+├── pm-engagement-design/       ← 🆕 Engagement & retention
+│
+├── pm-product-discovery/       ← Discovery & validation
+├── pm-product-strategy/        ← Strategy & business model
+├── pm-execution/               ← PRD, OKR, roadmap, sprint
+├── pm-market-research/         ← Persona, segmentation, sizing
+├── pm-data-analytics/          ← SQL, cohort, A/B test
+├── pm-go-to-market/            ← GTM, growth, battlecard
+├── pm-marketing-growth/        ← Positioning, North Star
+├── pm-toolkit/                 ← Utilities (resume, NDA, grammar)
+│
+└── Project Context/            ← Data thực tế của Pika
+    └── production-version/
+        └── product-docs/       ← Feedback, research, insights, proposals
+```
+
+Mỗi plugin có cấu trúc giống nhau:
+```
+pm-[tên-plugin]/
+├── .claude-plugin/plugin.json  ← Metadata
+├── commands/                   ← Các lệnh /slash-command
+│   └── [tên-lệnh].md
+└── skills/                     ← Các skill
+    └── [tên-skill]/
+        └── SKILL.md
+```
 
 ---
 
-## About
+## Hướng dẫn đóng góp cho team Pika
 
-This marketplace evolves with product practice and AI capabilities.
+Các bạn product trong team có thể đóng góp và mở rộng workspace này. Dưới đây là các hướng cụ thể:
 
-Selected skills based on the work of:
+### 1. Thêm Project Context (dễ nhất, ai cũng làm được)
 
-- Teresa Torres — [*Continuous Discovery Habits*](https://www.amazon.com/Continuous-Discovery-Habits-Discover-Products/dp/1736633309/)
-- Marty Cagan — [*INSPIRED*](https://www.amazon.com/INSPIRED-Create-Tech-Products-Customers/dp/1119387507/) and [*TRANSFORMED*](https://www.amazon.com/dp/1119697336/)
-- Alberto Savoia — [*The Right It*](https://www.amazon.com/Right-Many-Ideas-Yours-Succeed/dp/0062884654)
-- Dan Olsen — [*The Lean Product Playbook*](https://www.amazon.com/dp/1118960874/)
-- Roger L. Martin — [*Playing to Win*](https://www.amazon.com/Playing-Win-Expanded-Bonus-Articles/dp/B0F25SDYWV/)
-- Ash Maurya — [*Running Lean*](https://www.amazon.com/dp/B004J4XGN6/)
-- Strategyzer — [*Business Model Generation*](https://www.amazon.com/dp/0470876417/) and [*Value Proposition Design*](https://www.amazon.com/dp/1118968050/)
-- Christina Wodtke — [*Radical Focus*](https://www.amazon.com/Radical-Focus-Achieving-Important-Objectives/dp/0996006052)
-- Anthony W. Ulwick — [*Jobs to Be Done*](https://jobs-to-be-done-book.com/)
-- Alistair Croll & Benjamin Yoskovitz — [*Lean Analytics*](https://www.amazon.com/Lean-Analytics-Better-Startup-Faster/dp/1449335675/)
-- Sean Ellis — [*Hacking Growth*](https://www.amazon.com/Hacking-Growth-Fastest-Growing-Companies-Breakout/dp/045149721X/)
-- Maja Voje — [*Go-To-Market Strategist*](https://gtmstrategist.com/)
+Thư mục `Project Context/production-version/product-docs/` chứa data thực tế mà orchestrator dùng để inject context. Bạn có thể thêm:
 
-Curated by Paweł Huryn from [The Product Compass Newsletter](https://www.productcompass.pm).
+- **User feedback mới** → `insight hub/user-feedback/`
+- **Kết quả phỏng vấn** → `insight hub/proposals/`
+- **Report feature** → `insight hub/feature-report/`
+- **Insight & phân tích** → `insight hub/insight/`
+- **Market research** → `insight hub/market-research/`
 
-## Contributing
+**Format:** Markdown (.md) hoặc CSV. Đặt tên file rõ ràng, có ngày tháng.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+### 2. Tạo Skill mới
 
-## Known Issue on Windows
+Khi bạn phát hiện một quy trình PM lặp đi lặp lại mà chưa có skill, hãy tạo một skill mới:
 
-If your Cowork is unstable and can't start a VM ([claude-code/issues/27010](https://github.com/anthropics/claude-code/issues/27010)), try:
+**Bước 1:** Tạo thư mục `pm-[plugin-phù-hợp]/skills/[tên-skill-mới]/SKILL.md`
 
-```powershell
-$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-WindowStyle Hidden -Command `"if ((Get-Service CoworkVMService).Status -ne 'Running') { Start-Service CoworkVMService }`""
+**Bước 2:** Viết SKILL.md theo format:
 
-$trigger = New-ScheduledTaskTrigger -RepetitionInterval (New-TimeSpan -Minutes 1) -Once -At (Get-Date)
+```markdown
+---
+name: ten-skill-kebab-case
+description: "Mô tả ngắn. Use when [khi nào dùng skill này]."
+---
 
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+## Tên Skill Đầy Đủ
 
-Register-ScheduledTask -TaskName "CoworkVMServiceMonitor" `
-  -Action $action `
-  -Trigger $trigger `
-  -Settings $settings `
-  -RunLevel Highest `
-  -User "SYSTEM"
+[1-2 đoạn giải thích skill này làm gì và tại sao quan trọng]
+
+### Domain Context
+[Framework, tác giả, lý thuyết nền tảng — trích dẫn nguồn cụ thể]
+
+### Context
+You are [vai trò] for **$ARGUMENTS**.
+
+### Instructions
+1. **Bước 1**: [hướng dẫn cụ thể]
+2. **Bước 2**: [hướng dẫn cụ thể]
+...
+
+### Output Format
+[Template markdown cho output]
+
+### Further Reading
+[Link đến sách, bài viết, nghiên cứu liên quan]
 ```
 
-It solves 90% of the issues on Windows.
-The remaining 10%: open services.msc > start "Claude" service manually
+**Bước 3:** Thêm skill vào `pm-orchestrator/skill-graph.yaml`:
+
+```yaml
+ten-skill-moi:
+  phase: [discover|strategy|design-learning|plan|validate|launch|grow|any]
+  plugin: pm-[tên-plugin]
+  produces: [loai-artifact-tao-ra]
+  requires: [artifact-can-co-truoc]
+  enhancedBy: [artifact-giup-tot-hon]
+  effort: [quick|moderate|deep]
+  description: "Mô tả 1 dòng"
+  command: "/[ten-lenh]"
+```
+
+### 3. Tạo Command mới (workflow nhiều bước)
+
+Command chain nhiều skill lại thành workflow. Tạo file `pm-[plugin]/commands/[tên-lệnh].md`:
+
+```markdown
+---
+description: Mô tả ngắn
+argument-hint: "<gợi ý argument>"
+---
+
+# /tên-lệnh -- Tiêu Đề
+
+## Invocation
+[Ví dụ cách gọi]
+
+## Workflow
+### Step 1: [Tên bước]
+Apply skill `tên-skill`.
+**Checkpoint:** [Hỏi user trước khi đi tiếp]
+
+### Step 2: [Tên bước]
+...
+```
+
+### 4. Các skill gợi ý team nên tạo thêm
+
+Dựa trên context của Pika, đây là những skill chưa có mà team nên cân nhắc:
+
+| Skill gợi ý | Plugin phù hợp | Lý do |
+|---|---|---|
+| `design-content-taxonomy` | pm-learning-design | Pika cần hệ thống phân loại nội dung (topic, level, format) |
+| `plan-content-pipeline` | pm-learning-design | Quy trình sản xuất content: viết → review → record → publish |
+| `design-onboarding-flow` | pm-engagement-design | Onboarding riêng cho EdTech (child + parent flow) |
+| `analyze-learning-data` | pm-data-analytics | Phân tích data học tập: completion rate, mastery rate, time-to-mastery |
+| `design-robot-interaction` | pm-learning-design (hoặc plugin mới) | Thiết kế tương tác voice/robot đặc thù cho Pika Robot |
+| `localization-strategy` | pm-go-to-market | Chiến lược mở rộng ngôn ngữ/thị trường (VN → SEA → global) |
+| `subscription-lifecycle` | pm-engagement-design | Phân tích vòng đời subscription: trial → paid → renewal → churn |
+| `parent-interview-script` | pm-product-discovery | Script phỏng vấn đặc thù cho phụ huynh (khác với user interview thông thường) |
+
+### 5. Cập nhật skill hiện có
+
+Nếu bạn dùng một skill và thấy thiếu sót (ví dụ: framework không phù hợp cho trẻ em VN, output template cần thêm mục), hãy sửa trực tiếp file SKILL.md và tạo PR.
+
+**Nguyên tắc khi sửa:**
+- Giữ format hiện có (YAML frontmatter, ### sections)
+- Trích dẫn nguồn nếu thêm framework mới
+- Cập nhật `skill-graph.yaml` nếu thay đổi produces/requires
+
+### 6. Quy trình đóng góp
+
+```
+1. Tạo branch mới: git checkout -b feat/ten-skill-moi
+2. Thêm/sửa files
+3. Chạy validate: python validate_plugins.py (nếu có)
+4. Commit và push
+5. Tạo Pull Request, mô tả rõ thay đổi
+```
+
+---
+
+## Credit
+
+- **PM Skills Marketplace gốc** — Paweł Huryn, [The Product Compass](https://www.productcompass.pm)
+- **EdTech plugins** (pm-learning-design, pm-child-safety, pm-engagement-design) — Pika Product Team
+- **Frameworks tham khảo chính:**
+  - Teresa Torres — *Continuous Discovery Habits*
+  - Wiggins & McTighe — *Understanding by Design*
+  - Bloom, Anderson & Krathwohl — Bloom's Revised Taxonomy
+  - Vygotsky — Zone of Proximal Development
+  - Hattie — *Visible Learning*
+  - Dweck — Growth Mindset
+  - Deci & Ryan — Self-Determination Theory
+  - Nir Eyal — *Hooked* (adapted ethically for children)
+  - Kirkpatrick — Four Levels of Evaluation
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — xem [LICENSE](LICENSE).

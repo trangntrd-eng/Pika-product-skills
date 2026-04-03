@@ -2,7 +2,7 @@
 
 ## What This Repo Is
 
-This is a PM skill workspace for Pika, a B2C EdTech product for children in Vietnam. It contains 84 PM skills organized into 12 plugins, with a master orchestrator.
+This is a PM skill workspace for Pika, a B2C EdTech product for children in Vietnam. It contains 109 PM skills organized into 14 plugins, with a master orchestrator.
 
 ## How to Use Skills
 
@@ -47,10 +47,26 @@ When the user asks you to run a skill or command, read the corresponding file an
 - When user says `/review-resume` → Read and follow `pm-toolkit/commands/review-resume.md`
 - When user says `/tailor-resume` → Read and follow `pm-toolkit/commands/tailor-resume.md`
 
+### People Management Commands
+- When user says `/people-plan` → Read and follow `pm-people-management/commands/people-plan.md`
+- When user says `/people-hire` → Read and follow `pm-people-management/commands/people-hire.md`
+- When user says `/people-grow` → Read and follow `pm-people-management/commands/people-grow.md`
+- When user says `/people-health` → Read and follow `pm-people-management/commands/people-health.md`
+
+### AI Product Commands
+- When user says `/ai-discover` → Read and follow `pm-ai-product/commands/ai-discover.md`
+- When user says `/ai-strategy` → Read and follow `pm-ai-product/commands/ai-strategy.md`
+- When user says `/ai-design` → Read and follow `pm-ai-product/commands/ai-design.md`
+- When user says `/ai-responsible` → Read and follow `pm-ai-product/commands/ai-responsible.md`
+- When user says `/ai-evaluate` → Read and follow `pm-ai-product/commands/ai-evaluate.md`
+
 ### EdTech Commands (Pika-specific)
 - When user says `/learning-design` → Read and follow `pm-learning-design/commands/learning-design.md`
 - When user says `/child-safety` → Read and follow `pm-child-safety/commands/child-safety.md`
 - When user says `/engagement-design` → Read and follow `pm-engagement-design/commands/engagement-design.md`
+
+### Product Coaching Commands
+- When user says `/coach` → Read and follow `pm-product-coach/commands/coach.md`
 
 ## Skill Graph & Orchestrator
 

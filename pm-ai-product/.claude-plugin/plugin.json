@@ -1,0 +1,19 @@
+{
+  "name": "pm-ai-product",
+  "version": "1.0.0",
+  "description": "AI product management skills for PMs building AI-powered products: use case discovery, feasibility assessment, model selection, prompt strategy, AI UX patterns, responsible AI design, evaluation frameworks, and launch readiness.",
+  "author": {
+    "name": "Trang Nguyen"
+  },
+  "keywords": [
+    "product-management",
+    "ai-product",
+    "llm",
+    "machine-learning",
+    "prompt-engineering",
+    "responsible-ai",
+    "ai-evaluation",
+    "ai-strategy"
+  ],
+  "license": "MIT"
+}

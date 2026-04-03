@@ -1,0 +1,19 @@
+{
+  "name": "pm-product-coach",
+  "version": "1.0.0",
+  "description": "AI Product Coach — career growth, weekly reflections, stakeholder navigation, skill development, and mental model building for PMs.",
+  "author": {
+    "name": "Trang Nguyen",
+    "email": "trang@pika.education"
+  },
+  "keywords": [
+    "product-management",
+    "coaching",
+    "career-growth",
+    "product-leadership",
+    "reflection",
+    "stakeholder",
+    "seniority"
+  ],
+  "license": "MIT"
+}

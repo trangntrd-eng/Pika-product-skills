@@ -1,0 +1,19 @@
+{
+  "name": "pm-people-management",
+  "version": "1.0.0",
+  "description": "People management skills for Product Managers: team staffing, hiring, performance reviews, career development, onboarding, team health, and succession planning.",
+  "author": {
+    "name": "Trang Nguyen"
+  },
+  "keywords": [
+    "product-management",
+    "people-management",
+    "hiring",
+    "recruitment",
+    "performance-review",
+    "team-building",
+    "career-development",
+    "staffing"
+  ],
+  "license": "MIT"
+}

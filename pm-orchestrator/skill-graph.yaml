@@ -89,6 +89,37 @@ phases:
       - growth loops identified
       - cohort analysis running
 
+  - id: ai-product
+    name: "AI Product Design"
+    description: "Discover, design, and launch AI-powered features responsibly"
+    goal: "AI features that are feasible, well-designed, safe, and production-ready"
+    exit_criteria:
+      - AI use cases mapped and feasibility validated
+      - AI product strategy with build-vs-buy decisions
+      - Prompt architecture and AI UX designed
+      - Responsible AI review and risk assessment completed
+      - Evaluation framework and launch readiness confirmed
+
+  - id: people
+    name: "People Management"
+    description: "Build, hire, develop, and maintain high-performing product teams"
+    goal: "Right people in right roles with clear growth paths and healthy team dynamics"
+    exit_criteria:
+      - Team staffing plan aligned to roadmap
+      - Hiring process structured with scorecards
+      - Performance review cycle running
+      - Career ladders defined
+      - Team health monitored regularly
+
+  - id: coach
+    name: "PM Coaching"
+    description: "Career growth, reflections, situational guidance, and mental model building for PMs"
+    goal: "PM develops self-awareness, growth trajectory, and self-coaching ability"
+    exit_criteria:
+      - Growth path defined (90-day sprint)
+      - Weekly reflection practice established
+      - Situational playbooks internalized
+
 # ----------------------------------------------------------------------------
 # SKILL NODES
 # ----------------------------------------------------------------------------
@@ -959,6 +990,284 @@ skills:
     description: "Design parent dashboards, communication cadence, and renewal motivation"
     command: "/engagement-design"
 
+  # ==========================================================================
+  # AI PRODUCT DESIGN PHASE — pm-ai-product
+  # ==========================================================================
+
+  ai-use-case-mapping:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-use-cases]
+    requires: []
+    enhancedBy: [personas, strategy, feedback-insights]
+    effort: moderate
+    description: "Map product features to AI capabilities, identify where AI adds real value"
+    command: "/ai-discover"
+
+  ai-feasibility-assessment:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-feasibility]
+    requires: [ai-use-cases]
+    enhancedBy: [personas, metrics]
+    effort: moderate
+    description: "Assess technical feasibility of AI features: models, data, infra, timeline"
+    command: "/ai-discover"
+
+  ai-data-readiness:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-data-audit]
+    requires: [ai-use-cases]
+    enhancedBy: [ai-feasibility]
+    effort: moderate
+    description: "Audit data availability, quality, labeling, and privacy for AI features"
+    command: "/ai-discover"
+
+  ai-product-strategy:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-strategy]
+    requires: []
+    enhancedBy: [ai-use-cases, ai-feasibility, strategy, competitive-landscape]
+    effort: deep
+    description: "Define AI product vision, differentiation, flywheel, and phased roadmap"
+    command: "/ai-strategy"
+
+  ai-build-vs-buy:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-build-decisions]
+    requires: [ai-use-cases]
+    enhancedBy: [ai-strategy, ai-feasibility]
+    effort: moderate
+    description: "Build custom vs. API vs. fine-tune vs. open-source decision framework"
+    command: "/ai-strategy"
+
+  ai-model-selection:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-model-choices]
+    requires: [ai-build-decisions]
+    enhancedBy: [ai-feasibility, ai-strategy]
+    effort: moderate
+    description: "Compare and select AI models/providers with trade-off analysis"
+    command: "/ai-strategy"
+
+  ai-cost-modeling:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-cost-model]
+    requires: [ai-model-choices]
+    enhancedBy: [ai-build-decisions, business-model]
+    effort: moderate
+    description: "Model AI economics: token costs, scaling curves, unit economics impact"
+    command: "/ai-strategy"
+
+  ai-prompt-strategy:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-prompt-design]
+    requires: [ai-model-choices]
+    enhancedBy: [ai-strategy, personas]
+    effort: deep
+    description: "Design prompt architecture, versioning, testing, and optimization"
+    command: "/ai-design"
+
+  ai-ux-patterns:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-ux-design]
+    requires: [ai-use-cases]
+    enhancedBy: [personas, ai-prompt-design, journey-map]
+    effort: moderate
+    description: "Design UX for AI uncertainty, latency, streaming, errors, and degradation"
+    command: "/ai-design"
+
+  ai-human-in-the-loop:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-hitl-design]
+    requires: [ai-use-cases]
+    enhancedBy: [ai-ux-design, ai-prompt-design]
+    effort: moderate
+    description: "Design human oversight, escalation, feedback loops, and quality control"
+    command: "/ai-design"
+
+  ai-responsible-design:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-ethics-review]
+    requires: [ai-use-cases]
+    enhancedBy: [personas, ai-strategy, compliance-audit]
+    effort: deep
+    description: "Ethics, bias detection, fairness, transparency, and safety guardrails"
+    command: "/ai-responsible"
+
+  ai-risk-assessment:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-risk-register]
+    requires: [ai-use-cases]
+    enhancedBy: [ai-ethics-review, ai-prompt-design]
+    effort: moderate
+    description: "Identify and mitigate AI risks: hallucination, injection, leaks, drift"
+    command: "/ai-responsible"
+
+  ai-evaluation-framework:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-eval-framework]
+    requires: [ai-use-cases]
+    enhancedBy: [ai-prompt-design, metrics, ai-ethics-review]
+    effort: deep
+    description: "Design metrics and eval pipelines for AI quality measurement"
+    command: "/ai-evaluate"
+
+  ai-launch-readiness:
+    phase: ai-product
+    plugin: pm-ai-product
+    produces: [ai-launch-checklist]
+    requires: [ai-eval-framework]
+    enhancedBy: [ai-risk-register, ai-ethics-review, ai-hitl-design]
+    effort: moderate
+    description: "Pre-launch checklist: quality gates, monitoring, rollback, scaling"
+    command: "/ai-evaluate"
+
+  # ==========================================================================
+  # PEOPLE MANAGEMENT PHASE — pm-people-management
+  # ==========================================================================
+
+  team-staffing-plan:
+    phase: people
+    plugin: pm-people-management
+    produces: [staffing-plan]
+    requires: []
+    enhancedBy: [strategy, roadmap, okrs]
+    effort: deep
+    description: "Build headcount plan tied to product roadmap with ROI justification"
+    command: "/people-plan"
+
+  team-capability-assessment:
+    phase: people
+    plugin: pm-people-management
+    produces: [capability-map]
+    requires: []
+    enhancedBy: [staffing-plan, roadmap]
+    effort: moderate
+    description: "Assess team skills vs. roadmap requirements, identify gaps"
+    command: "/people-plan"
+
+  succession-planning:
+    phase: people
+    plugin: pm-people-management
+    produces: [succession-plan]
+    requires: [capability-map]
+    enhancedBy: [staffing-plan]
+    effort: moderate
+    description: "Identify key-person risks and develop successor pipeline"
+    command: "/people-plan"
+
+  job-description:
+    phase: people
+    plugin: pm-people-management
+    produces: [job-posting]
+    requires: [staffing-plan]
+    enhancedBy: [capability-map]
+    effort: quick
+    description: "Write compelling JDs that attract the right candidates"
+    command: "/people-hire"
+
+  hiring-scorecard:
+    phase: people
+    plugin: pm-people-management
+    produces: [hiring-rubric]
+    requires: [job-posting]
+    enhancedBy: [capability-map]
+    effort: moderate
+    description: "Create structured evaluation rubric before interviews begin"
+    command: "/people-hire"
+
+  interview-kit:
+    phase: people
+    plugin: pm-people-management
+    produces: [interview-plan]
+    requires: [hiring-rubric]
+    enhancedBy: [job-posting]
+    effort: moderate
+    description: "Design competency-based interview process with structured questions"
+    command: "/people-hire"
+
+  candidate-evaluation:
+    phase: people
+    plugin: pm-people-management
+    produces: [hiring-decision]
+    requires: [hiring-rubric, interview-plan]
+    enhancedBy: []
+    effort: moderate
+    description: "Compare candidates against scorecard with evidence-based recommendation"
+    command: "/people-hire"
+
+  performance-review:
+    phase: people
+    plugin: pm-people-management
+    produces: [performance-feedback]
+    requires: []
+    enhancedBy: [capability-map]
+    effort: moderate
+    description: "Write evidence-based performance reviews with development plans"
+    command: "/people-grow"
+
+  career-ladder:
+    phase: people
+    plugin: pm-people-management
+    produces: [career-framework]
+    requires: []
+    enhancedBy: [capability-map, staffing-plan]
+    effort: deep
+    description: "Design role leveling with IC and management tracks"
+    command: "/people-grow"
+
+  onboarding-plan:
+    phase: people
+    plugin: pm-people-management
+    produces: [onboarding-program]
+    requires: []
+    enhancedBy: [job-posting, capability-map]
+    effort: moderate
+    description: "Create structured 30/60/90 day onboarding with milestones"
+    command: "/people-grow"
+
+  pip-plan:
+    phase: people
+    plugin: pm-people-management
+    produces: [performance-plan]
+    requires: [performance-feedback]
+    enhancedBy: [career-framework]
+    effort: moderate
+    description: "Design fair PIP with measurable goals and support structures"
+    command: "/people-grow"
+
+  team-health-check:
+    phase: people
+    plugin: pm-people-management
+    produces: [team-health-report]
+    requires: []
+    enhancedBy: [capability-map]
+    effort: moderate
+    description: "Assess morale, workload, collaboration, and psychological safety"
+    command: "/people-health"
+
+  product-growth-coach:
+    phase: coach
+    plugin: pm-product-coach
+    produces: [growth-plan, reflection-doc, situational-analysis]
+    requires: []
+    enhancedBy: []
+    effort: quick
+    description: "AI Product Coach — career growth, weekly ORID reflections, situational playbooks, and mental model building for PM Middle"
+    command: "/coach"
+
 # ============================================================================
 # RECOMMENDED PATHS
 # ============================================================================
@@ -1098,3 +1407,95 @@ paths:
       - design-parental-consent
       - design-age-gating
       - design-safe-ux
+
+  # --- Product Coaching Path ---
+
+  pm-growth-coaching:
+    name: "PM Growth Coaching"
+    description: "Career growth, weekly reflection, and situational coaching for PM Middle"
+    steps:
+      - product-growth-coach
+
+  # --- AI Product Paths ---
+
+  ai-feature-full-cycle:
+    name: "AI Feature (Full Cycle)"
+    description: "End-to-end journey from AI opportunity discovery to production-ready AI feature"
+    steps:
+      - ai-use-case-mapping
+      - ai-feasibility-assessment
+      - ai-data-readiness
+      - ai-product-strategy
+      - ai-build-vs-buy
+      - ai-model-selection
+      - ai-cost-modeling
+      - ai-prompt-strategy
+      - ai-ux-patterns
+      - ai-human-in-the-loop
+      - ai-responsible-design
+      - ai-risk-assessment
+      - ai-evaluation-framework
+      - ai-launch-readiness
+
+  ai-quick-validation:
+    name: "AI Quick Validation"
+    description: "Rapid validation of an AI feature idea — feasibility and risks in one sprint"
+    steps:
+      - ai-use-case-mapping
+      - ai-feasibility-assessment
+      - ai-data-readiness
+      - ai-build-vs-buy
+      - ai-cost-modeling
+      - ai-risk-assessment
+
+  ai-launch-prep:
+    name: "AI Launch Preparation"
+    description: "Pre-launch readiness for AI features already built"
+    steps:
+      - ai-responsible-design
+      - ai-risk-assessment
+      - ai-evaluation-framework
+      - ai-launch-readiness
+
+  # --- People Management Paths ---
+
+  team-build-from-scratch:
+    name: "Build a New Team"
+    description: "Full journey from staffing plan to hired, onboarded team"
+    steps:
+      - team-staffing-plan
+      - team-capability-assessment
+      - career-ladder
+      - job-description
+      - hiring-scorecard
+      - interview-kit
+      - candidate-evaluation
+      - onboarding-plan
+
+  hiring-sprint:
+    name: "Hiring Sprint"
+    description: "Rapid end-to-end hiring for an open role"
+    steps:
+      - hiring-scorecard
+      - job-description
+      - interview-kit
+      - candidate-evaluation
+
+  people-review-cycle:
+    name: "Performance Review Cycle"
+    description: "Run a complete team performance review with development planning"
+    steps:
+      - team-capability-assessment
+      - performance-review
+      - career-ladder
+      - succession-planning
+      - team-health-check
+
+  team-diagnostic:
+    name: "Team Diagnostic"
+    description: "Comprehensive team assessment when something feels off"
+    steps:
+      - team-health-check
+      - team-capability-assessment
+      - succession-planning
+      - team-staffing-plan
